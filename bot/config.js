@@ -40,9 +40,13 @@ export const config = {
     welcome: true,
     goodbye: true,
     adminlog: true,
-    welcomeText:
-      `👋 স্বাগতম {user}!\n*{group}* গ্রুপে আপনাকে ধন্যবাদ। বর্তমান সদস্য: {count} জন।\nনিয়ম ও কমান্ড দেখতে লিখুন: ${prefix}help`,
-    goodbyeText: '🚶 {user} গ্রুপ ছেড়ে চলে গেছেন। ভালো থাকবেন!',
+    // ডিজাইন: থিম (blossom|classic|royal|neon|minimal), ফন্ট (.font দেখুন), গ্রুপ-মেসেজের ভাষা (en|bn)
+    theme: process.env.DEFAULT_THEME || 'blossom',
+    font: process.env.DEFAULT_FONT || 'bold',
+    lang: process.env.DEFAULT_LANG || 'en',
+    // খালি = থিমের ডিফল্ট ডিজাইন। .setwelcome / .setgoodbye দিয়ে নিজের টেক্সট বসানো যায়
+    welcomeCustom: '',
+    goodbyeCustom: '',
     rules:
       '1️⃣ কোনো লিঙ্ক বা স্প্যাম পাঠানো যাবে না\n2️⃣ সবাইকে সম্মান করুন\n3️⃣ অপ্রয়োজনীয় স্টিকার ও মাস-মেনশন নিষিদ্ধ',
   },
