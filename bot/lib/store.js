@@ -8,7 +8,7 @@ import { config } from '../config.js';
  *
  * গঠন:
  * groups[jid] = {
- *   settings: { antilink, antisticker, ... , welcomeText, rules },
+ *   settings: { antilink, antisticker, ..., theme, font, lang, welcomeCustom, rules },
  *   adminLog: [{ ts, type, by, targets, ... }],
  *   messages: { [msgId]: { s, t, ts, r: {reactor: emoji}, q: replyCount } },
  *   members:  { [jid]: { count, last } },
