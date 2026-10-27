@@ -1,0 +1,21 @@
+{
+  "name": "wa-bot-host",
+  "version": "1.0.0",
+  "description": "WhatsApp বট হোস্টিং ড্যাশবোর্ড — GitHub থেকে Railway-তে ডিপ্লয়যোগ্য",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "~6.7.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "pino": "^9.0.0",
+    "qrcode": "^1.5.4"
+  }
+}
