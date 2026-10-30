@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>গ্রুপ সেটিং • WA Bot Host</title>
+<style>
+  :root {
+    --bg: #f4f6f8; --card: #ffffff; --text: #17212b; --muted: #5d6b79;
+    --line: #dde3ea; --accent: #128c7e; --accent-text: #ffffff;
+    --ok: #1a8f4c; --warn: #b36b00; --bad: #c62828;
+    --chat-bg: #efeae2; --bubble: #ffffff; --bubble-text: #111b21;
+  }
+  :root:not([data-theme="light"]) { color-scheme: light dark; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e141a; --card: #17202a; --text: #e8eef4; --muted: #94a3b2;
+      --line: #2a3541; --accent: #25b8a6; --accent-text: #04201c;
+      --ok: #4ade80; --warn: #fbbf24; --bad: #f87171;
+      --chat-bg: #0b141a; --bubble: #202c33; --bubble-text: #e9edef;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", "Noto Sans Bengali", "Kalpurush", sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 16px 16px 96px; }
+  h1 { font-size: 20px; margin: 4px 0 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  h1 a { font-size: 14px; font-weight: 500; color: var(--accent); text-decoration: none; }
+  .card, details { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+  details { padding: 0; }
+  summary { cursor: pointer; padding: 14px 16px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "▾"; color: var(--muted); }
+  details[open] > summary::after { content: "▴"; }
+  details > .body { padding: 0 16px 16px; border-top: 1px solid var(--line); padding-top: 14px; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .hidden { display: none !important; }
+  label.f { display: block; margin: 12px 0 4px; font-size: 13px; color: var(--muted); }
+  input[type=text], input[type=time], input[type=number], select, textarea {
+    width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg); color: var(--text); font: inherit;
+  }
+  textarea { min-height: 84px; resize: vertical; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button { border: 1px solid var(--line); background: var(--card); color: var(--text); padding: 10px 14px; border-radius: 10px; font: inherit; cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+  button.small { padding: 6px 10px; font-size: 13px; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  .row { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+  .row > .grow { flex: 1 1 auto; min-width: 0; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 480px) { .split { grid-template-columns: 1fr; } }
+  .feat { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .feat:last-child { border-bottom: 0; }
+  .feat b { font-weight: 600; }
+  .feat .muted { display: block; }
+  .sw { position: relative; flex: 0 0 auto; width: 46px; height: 26px; }
+  .sw input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .sw .track { position: absolute; inset: 0; border-radius: 999px; background: var(--line); transition: background .15s; }
+  .sw .track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .15s; }
+  .sw input:checked + .track { background: var(--accent); }
+  .sw input:checked + .track::after { transform: translateX(20px); }
+  .sw input:focus-visible + .track { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 4px 3px 10px; margin: 0 6px 6px 0; border-radius: 8px; background: var(--bg); border: 1px solid var(--line); font-size: 13px; }
+  .chip button { border: 0; background: transparent; padding: 0 6px; color: var(--muted); font-size: 15px; line-height: 1; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1px solid currentColor; }
+  .pill.ok { color: var(--ok); } .pill.warn { color: var(--warn); }
+  .chat { background: var(--chat-bg); border-radius: 12px; padding: 14px; margin-top: 12px; overflow-x: auto; }
+  .bubble { display: inline-block; max-width: 100%; background: var(--bubble); color: var(--bubble-text); padding: 9px 12px 8px; border-radius: 4px 12px 12px 12px; white-space: pre-wrap; word-break: break-word; font-size: 14.5px; line-height: 1.5; box-shadow: 0 1px 1px rgba(0,0,0,.13); }
+  .savebar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); }
+  .savebar .in { max-width: 760px; margin: 0 auto; display: flex; gap: 10px; align-items: center; }
+  .savebar .msg { flex: 1 1 auto; font-size: 13px; color: var(--muted); }
+  .savebar .msg.ok { color: var(--ok); } .savebar .msg.bad { color: var(--bad); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span>⚙️ গ্রুপ সেটিং</span><a href="/">← ড্যাশবোর্ড</a></h1>
+
+  <div class="card" id="botCard">
+    <div class="feat" style="padding-top:0">
+      <span><b>প্রাইভেট মোড</b><span class="muted">চালু থাকলে শুধু বটের নম্বর (ও OWNER_NUMBERS) বট চালাতে পারে। অটো-মডারেশন চলতে থাকে।</span></span>
+      <label class="sw"><input type="checkbox" id="privSw" aria-label="প্রাইভেট মোড"><span class="track"></span></label>
+    </div>
+    <div class="muted" id="botLine" style="margin-top:6px"></div>
+  </div>
+
+  <div class="card">
+    <label class="f" for="groupSel" style="margin-top:0">গ্রুপ বেছে নিন</label>
+    <select id="groupSel"></select>
+    <div class="muted" id="groupHint" style="margin-top:8px"></div>
+  </div>
+
+  <div id="editor" class="hidden">
+    <details open>
+      <summary>ফিচার চালু/বন্ধ <span class="muted" id="featCount"></span></summary>
+      <div class="body" id="features"></div>
+    </details>
+
+    <details open>
+      <summary>নোটিশের ডিজাইন</summary>
+      <div class="body">
+        <div class="split">
+          <div><label class="f" for="theme">থিম</label><select id="theme"></select></div>
+          <div><label class="f" for="font">ফন্ট</label><select id="font"></select></div>
+          <div><label class="f" for="lang">ভাষা</label><select id="lang"></select></div>
+          <div><label class="f" for="welcomeStyle">ওয়েলকাম স্টাইল</label><select id="welcomeStyle"></select></div>
+        </div>
+        <label class="f" for="bannerEmoji">ব্যানারের ইমোজি (সর্বোচ্চ ২টি, ফাঁকা = নোটিশের ধরন অনুযায়ী নিজে নিজে)</label>
+        <div class="row" style="margin-top:0">
+          <input class="grow" type="text" id="bannerEmoji" placeholder="🌸 ✨" autocomplete="off">
+          <label class="muted" style="white-space:nowrap"><input type="checkbox" id="bannerOff"> ব্যানার বন্ধ</label>
+        </div>
+
+        <label class="f" for="pvKind">প্রিভিউ — সেভ করার আগেই চেহারা দেখুন</label>
+        <select id="pvKind"></select>
+        <div class="chat"><div class="bubble" id="pvText">…</div></div>
+      </div>
+    </details>
+
+    <details>
+      <summary>লেখা বদলান</summary>
+      <div class="body">
+        <label class="f" for="rules">গ্রুপের নিয়ম (প্রতি লাইনে একটি)</label>
+        <textarea id="rules" maxlength="600"></textarea>
+        <label class="f" for="welcomeCustom">নিজের ওয়েলকাম টেক্সট — {user} {group} {count} ব্যবহার করা যায়। ফাঁকা = থিমের ডিজাইন</label>
+        <textarea id="welcomeCustom" maxlength="500"></textarea>
+        <label class="f" for="goodbyeCustom">নিজের গুডবাই টেক্সট — ফাঁকা = থিমের ডিজাইন</label>
+        <textarea id="goodbyeCustom" maxlength="500"></textarea>
+      </div>
+    </details>
+
+    <details>
+      <summary>তালিকা ও স্বয়ংক্রিয় কাজ</summary>
+      <div class="body">
+        <label class="f" for="badwords">নিষিদ্ধ শব্দ (প্রতি লাইনে একটি)</label>
+        <textarea id="badwords"></textarea>
+
+        <div class="split">
+          <div>
+            <label class="f" for="codes">অনুমোদিত দেশের কোড (কমা দিয়ে, যেমন 880, 91)</label>
+            <input type="text" id="codes" autocomplete="off">
+          </div>
+          <div>
+            <label class="f" for="slow">স্লো-মোড: কত সেকেন্ডে একটি মেসেজ</label>
+            <input type="number" id="slow" min="2" max="600">
+          </div>
+        </div>
+
+        <label class="f">ব্ল্যাকলিস্ট (ট্যাপ করে সরান)</label>
+        <div id="blChips" class="muted">–</div>
+        <label class="f" for="blAdd">নম্বর যোগ করুন (দেশের কোডসহ, প্রতি লাইনে একটি)</label>
+        <textarea id="blAdd" style="min-height:56px"></textarea>
+
+        <label class="f">অটো-রিপ্লাই (কীওয়ার্ড ও উত্তর)</label>
+        <div id="replies"></div>
+        <button class="small" id="addReply" type="button" style="margin-top:8px">+ রিপ্লাই যোগ করুন</button>
+
+        <label class="f">প্রতিদিনের শিডিউল-মেসেজ (সর্বোচ্চ ৫টি)</label>
+        <div id="anns"></div>
+        <button class="small" id="addAnn" type="button" style="margin-top:8px">+ মেসেজ যোগ করুন</button>
+
+        <label class="f">অটো-ক্লোজ: প্রতিদিন গ্রুপ বন্ধ ও খোলার সময় (দুটোই ফাঁকা = বন্ধ)</label>
+        <div class="split">
+          <div><input type="time" id="acClose" aria-label="বন্ধের সময়"></div>
+          <div><input type="time" id="acOpen" aria-label="খোলার সময়"></div>
+        </div>
+        <div class="muted" id="tzLine" style="margin-top:6px"></div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="savebar hidden" id="saveBar"><div class="in">
+  <span class="msg" id="saveMsg">পরিবর্তন করলে এখানে সেভ করুন</span>
+  <button class="primary" id="saveBtn">সেভ করুন</button>
+</div></div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let meta = null, cur = null, dirty = false, blRemove = new Set(), pvTimer = null;
+
+async function api(path, method = 'GET', body) {
+  const res = await fetch(path, { method, headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined, credentials: 'same-origin' });
+  if (res.status === 401) { location.href = '/'; throw new Error('unauthorized'); }
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(json.error || 'কিছু ভুল হয়েছে');
+  return json;
+}
+function el(tag, props = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === 'class') e.className = v; else if (k === 'text') e.textContent = v; else if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else e.setAttribute(k, v);
+  }
+  kids.forEach((x) => e.append(x));
+  return e;
+}
+function fill(sel, items, current) {
+  sel.replaceChildren(...items.map(([v, t]) => { const o = el('option', { value: v, text: t }); if (v === current) o.selected = true; return o; }));
+}
+function markDirty() {
+  dirty = true; const m = $('saveMsg'); m.className = 'msg'; m.textContent = 'সেভ না-করা পরিবর্তন আছে';
+}
+function toast(text, kind) { const m = $('saveMsg'); m.className = 'msg ' + (kind || ''); m.textContent = text; }
+
+/* ---------- শুরু ---------- */
+async function init() {
+  meta = await api('/api/meta');
+  $('privSw').checked = meta.bot.private;
+  $('botLine').textContent = '';
+  const ai = el('span', { class: 'pill ' + (meta.ai.ready ? 'ok' : 'warn'), text: meta.ai.ready ? 'AI চালু' : 'AI বন্ধ (GEMINI_API_KEY নেই)' });
+  $('botLine').append('প্রিফিক্স ', el('b', { text: meta.bot.prefix }), ' • সময়অঞ্চল ', el('b', { text: meta.bot.timeZone }), ' • ', ai, meta.ai.ready ? ' ' + meta.ai.model : '');
+  $('privSw').addEventListener('change', async (e) => {
+    try { await api('/api/bot-mode', 'POST', { private: e.target.checked }); toast(e.target.checked ? 'প্রাইভেট মোড চালু হয়েছে' : 'প্রাইভেট মোড বন্ধ হয়েছে', 'ok'); }
+    catch (err) { e.target.checked = !e.target.checked; toast(err.message, 'bad'); }
+  });
+  fill($('theme'), meta.themes.map((t) => [t.id, t.label]));
+  fill($('font'), meta.fonts.map((f) => [f.id, `${f.id} — ${f.sample}`]));
+  fill($('lang'), meta.langs.map((l) => [l, l === 'en' ? 'English' : l === 'bn' ? 'বাংলা' : l]));
+  fill($('welcomeStyle'), meta.welcomeStyles.map((s) => [s, s]));
+  fill($('pvKind'), meta.previews.map((k) => [k, k]));
+  const { groups } = await api('/api/groups');
+  if (!groups.length) {
+    $('groupHint').textContent = 'বট এখনো কোনো গ্রুপ চেনে না। বটকে গ্রুপে যোগ করে সেখানে একটি মেসেজ বা কমান্ড (যেমন .ping) পাঠান, তারপর এই পেজ আবার খুলুন।';
+    $('groupSel').classList.add('hidden'); return;
+  }
+  fill($('groupSel'), groups.map((g) => [g.jid, `${g.name} (${g.members} সদস্য • ${g.enabled}/${g.total} ফিচার চালু)`]));
+  $('groupSel').addEventListener('change', () => loadGroup($('groupSel').value));
+  loadGroup(groups[0].jid);
+}
+
+async function loadGroup(jid) {
+  if (dirty && !confirm('সেভ না-করা পরিবর্তন মুছে যাবে। এগিয়ে যাবেন?')) { $('groupSel').value = cur.jid; return; }
+  cur = await api('/api/groups/' + encodeURIComponent(jid));
+  dirty = false; blRemove = new Set(); render();
+  $('editor').classList.remove('hidden'); $('saveBar').classList.remove('hidden'); toast('পরিবর্তন করলে এখানে সেভ করুন');
+}
+
+/* ---------- ফর্ম আঁকা ---------- */
+function render() {
+  const s = cur.settings;
+  $('groupHint').textContent = `${cur.stats.members} জন সদস্যের তথ্য আছে • ওয়ার্ন পেয়েছেন ${cur.stats.warned} জন • এখন AFK ${cur.stats.afk} জন`;
+  const feats = $('features'); feats.replaceChildren();
+  meta.features.forEach((f) => {
+    const cb = el('input', { type: 'checkbox', 'aria-label': f.label, 'data-key': f.key }); cb.checked = !!s[f.key];
+    cb.addEventListener('change', () => { markDirty(); updateCount(); });
+    const note = f.needsBotAdmin ? ' (বট অ্যাডমিন হতে হবে)' : '';
+    feats.append(el('div', { class: 'feat' }, el('span', {}, el('b', { text: f.label }), el('span', { class: 'muted', text: f.desc + note })), el('label', { class: 'sw' }, cb, el('span', { class: 'track' }))));
+  });
+  updateCount();
+  $('theme').value = s.theme; $('font').value = s.font; $('lang').value = s.lang; $('welcomeStyle').value = s.welcomeStyle;
+  $('bannerEmoji').value = (s.bannerEmoji || []).join(' '); $('bannerOff').checked = !!s.bannerOff;
+  $('rules').value = s.rules || ''; $('welcomeCustom').value = s.welcomeCustom || ''; $('goodbyeCustom').value = s.goodbyeCustom || '';
+  $('badwords').value = cur.badwords.join('\n'); $('codes').value = cur.countryCodes.join(', '); $('slow').value = s.slowSeconds || 10;
+  $('blAdd').value = ''; drawChips();
+  $('replies').replaceChildren(); cur.autoreplies.forEach((r) => addReplyRow(r.k, r.r));
+  $('anns').replaceChildren(); cur.announcements.forEach((a) => addAnnRow(a.at, a.text));
+  $('acClose').value = cur.schedule.close; $('acOpen').value = cur.schedule.open;
+  $('tzLine').textContent = 'সময় ধরা হয় ' + meta.bot.timeZone + ' অনুযায়ী';
+  refreshPreview();
+}
+function updateCount() { $('featCount').textContent = `${document.querySelectorAll('#features input:checked').length}/${meta.features.length} চালু`; }
+function drawChips() {
+  const box = $('blChips'); box.replaceChildren();
+  const rest = cur.blacklist.filter((b) => !blRemove.has(b.n));
+  if (!rest.length) { box.textContent = 'কেউ নেই'; return; }
+  rest.forEach((b) => box.append(el('span', { class: 'chip' }, '+' + b.n, el('button', { type: 'button', 'aria-label': b.n + ' সরান', text: '×', onclick: () => { blRemove.add(b.n); drawChips(); markDirty(); } }))));
+}
+function addReplyRow(k = '', r = '') {
+  const row = el('div', { class: 'row', style: 'align-items:flex-start' },
+    el('input', { type: 'text', class: 'rk', placeholder: 'কীওয়ার্ড', value: k, maxlength: 40, style: 'flex:0 0 32%' }),
+    el('textarea', { class: 'rr grow', placeholder: 'উত্তর', maxlength: 500, style: 'min-height:44px' }),
+    el('button', { type: 'button', class: 'small', text: '×', 'aria-label': 'সরান', onclick: () => { row.remove(); markDirty(); } }));
+  row.querySelector('.rr').value = r; $('replies').append(row);
+}
+function addAnnRow(at = '', text = '') {
+  const row = el('div', { class: 'row', style: 'align-items:flex-start' },
+    el('input', { type: 'time', class: 'at', value: at, style: 'flex:0 0 34%' }),
+    el('textarea', { class: 'tx grow', placeholder: 'মেসেজ', maxlength: 500, style: 'min-height:44px' }),
+    el('button', { type: 'button', class: 'small', text: '×', 'aria-label': 'সরান', onclick: () => { row.remove(); markDirty(); } }));
+  row.querySelector('.tx').value = text; $('anns').append(row);
+}
+
+/* ---------- ডিজাইনের মান ও প্রিভিউ ---------- */
+function emojiList() {
+  const seg = new Intl.Segmenter('en', { granularity: 'grapheme' });
+  return [...seg.segment($('bannerEmoji').value)].map((x) => x.segment).filter((x) => /\p{Extended_Pictographic}/u.test(x)).slice(0, 2);
+}
+function designValues() {
+  return { theme: $('theme').value, font: $('font').value, lang: $('lang').value, welcomeStyle: $('welcomeStyle').value, bannerOff: $('bannerOff').checked, bannerEmoji: emojiList(), welcomeCustom: $('welcomeCustom').value, goodbyeCustom: $('goodbyeCustom').value };
+}
+function refreshPreview() {
+  clearTimeout(pvTimer);
+  pvTimer = setTimeout(async () => {
+    try { const r = await api('/api/preview', 'POST', { kind: $('pvKind').value, jid: cur.jid, settings: designValues() }); $('pvText').textContent = r.text; }
+    catch (e) { $('pvText').textContent = e.message; }
+  }, 200);
+}
+['theme', 'font', 'lang', 'welcomeStyle', 'bannerEmoji', 'bannerOff', 'pvKind', 'welcomeCustom', 'goodbyeCustom'].forEach((id) =>
+  $(id).addEventListener(id === 'pvKind' ? 'change' : 'input', () => { if (id !== 'pvKind') markDirty(); refreshPreview(); }));
+['rules', 'badwords', 'codes', 'slow', 'blAdd', 'acClose', 'acOpen'].forEach((id) => $(id).addEventListener('input', markDirty));
+$('replies').addEventListener('input', markDirty); $('anns').addEventListener('input', markDirty);
+$('addReply').addEventListener('click', () => { addReplyRow(); markDirty(); });
+$('addAnn').addEventListener('click', () => { if ($('anns').children.length >= 5) return toast('সর্বোচ্চ ৫টি শিডিউল-মেসেজ রাখা যায়', 'bad'); addAnnRow(); markDirty(); });
+
+/* ---------- সেভ ---------- */
+$('saveBtn').addEventListener('click', async () => {
+  const settings = { ...designValues(), rules: $('rules').value, slowSeconds: Number($('slow').value) || 10 };
+  document.querySelectorAll('#features input').forEach((cb) => { settings[cb.dataset.key] = cb.checked; });
+  const lines = (v) => v.split('\n').map((x) => x.trim()).filter(Boolean);
+  const payload = {
+    settings,
+    badwords: lines($('badwords').value),
+    countryCodes: $('codes').value.split(/[,\s]+/).filter(Boolean),
+    blacklistRemove: [...blRemove],
+    blacklistAdd: lines($('blAdd').value),
+    autoreplies: [...document.querySelectorAll('#replies .row')].map((r) => ({ k: r.querySelector('.rk').value, r: r.querySelector('.rr').value })).filter((x) => x.k.trim() || x.r.trim()),
+    announcements: [...document.querySelectorAll('#anns .row')].map((r) => ({ at: r.querySelector('.at').value, text: r.querySelector('.tx').value })).filter((x) => x.at || x.text.trim()),
+    schedule: { close: $('acClose').value, open: $('acOpen').value },
+  };
+  $('saveBtn').disabled = true; toast('সেভ হচ্ছে…');
+  try {
+    cur = await api('/api/groups/' + encodeURIComponent(cur.jid), 'POST', payload);
+    dirty = false; blRemove = new Set(); render(); toast('সেভ হয়েছে। বটে এখনই কার্যকর', 'ok');
+  } catch (e) { toast(e.message, 'bad'); }
+  finally { $('saveBtn').disabled = false; }
+});
+window.addEventListener('beforeunload', (e) => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+init().catch((e) => { if (e.message !== 'unauthorized') $('groupHint').textContent = e.message; });
+</script>
+</body>
+</html>
